@@ -1,39 +1,53 @@
 "use-strict"
 {
+  const todos = [];
+
   document.getElementById(`add`).addEventListener(`click`, () => {
-    const tableList = document.createElement(`tr`)
-    document.querySelector(`table`).appendChild(tableList);
-    tableList.classList.add(`total`);
+    const todo = {
+      task: document.getElementById(`add-text`).value,
+      status: `作業中`,
+    }
+    todos.push(todo);
 
-    const newId = document.createElement(`td`);
-    newId.textContent = document.getElementsByClassName(`total`).length - 1;
-    tableList.appendChild(newId);
+    const lists = document.querySelectorAll(`tr`)
+    lists.forEach(function (list, i) {
+      if (i > 0) {
+        list.remove();
+      }
+    });
 
-    const newTask = document.createElement(`td`);
-    newTask.textContent = document.getElementById(`addText`).value;
-    tableList.appendChild(newTask);
 
-    const newStatus = document.createElement(`td`);
-    tableList.appendChild(newStatus);
+    for (let i = 0; i < todos.length; i++) {
+      const tr = document.createElement(`tr`);
+      document.querySelector(`table`).appendChild(tr);
 
-    const taskDel = document.createElement(`td`);
-    tableList.appendChild(taskDel);
+      const id = document.createElement(`td`);
+      id.textContent = i;
+      tr.appendChild(id);
 
-    const workBtn = document.createElement(`input`)
-    workBtn.value = "作業中";
-    workBtn.type = `button`;
-    workBtn.classList.add(`btn`);
-    newStatus.appendChild(workBtn);
+      const coment = document.createElement(`td`);
+      coment.textContent = todos[i].task;
+      tr.appendChild(coment);
 
-    const delBtn = document.createElement(`input`);
-    delBtn.value = `削除`;
-    delBtn.type = `button`;
-    delBtn.classList.add(`btn`);
-    newStatus.appendChild(delBtn);
+      const workBtn = document.createElement(`input`)
+      workBtn.value = todos[i].status;
+      workBtn.type = `button`;
+      workBtn.classList.add(`btn`);
+      tr.appendChild(workBtn);
 
-    addText.value = "";
+      const delBtn = document.createElement(`input`);
+      delBtn.value = `削除`;
+      delBtn.type = `button`;
+      delBtn.classList.add(`btn`);
+      tr.appendChild(delBtn);
+    }
+    document.getElementById(`add-text`).value = ""
   });
 }
+
+
+
+
 
 
 
